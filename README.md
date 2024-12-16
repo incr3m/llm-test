@@ -18,9 +18,9 @@ Step 1: Step up example backend
 
 2. `npm install`
 
-3. In `index.js` file, replace YOUR_API_KEY with your api key
+3. Create new `.env` file with `RETELL_AI_API_KEY` value inside 
 
-4. `node index.js` 
+4. `npm run start` 
 
 
 Step 2: Step up frontend
@@ -29,6 +29,6 @@ Step 2: Step up frontend
 
 2. `npm install`
 
-3. In `App.tsx`, replace ENTER_YOUR_AGENT_ID with your agent ID
+3. Create new `.env` file with `VITE_RETELL_AI_AGENT_ID` value inside 
 
 4. `npm run start`
