@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "sync": "deno run --allow-net --allow-env --env-file=.env setup-knowledge-base.ts",
-    "sync:dev": "deno run --watch --allow-net --allow-env --env-file=.env setup-knowledge-base.ts"
+    "pull": "deno run --allow-all --env-file=.env fetch-knowledge-base.ts",
+    "pull:dev": "deno run --watch --allow-all --env-file=.env fetch-knowledge-base.ts"
   }
 }

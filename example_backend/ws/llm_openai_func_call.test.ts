@@ -60,4 +60,20 @@ describe("Custom LLM agent", () => {
     console.log(`>>ws/llm_openai_func_call.test::T3: `, response); //TRACE
     expect(response).toBeTruthy();
   });
+
+  it("T4: should be able to ask for the service prices", async () => {
+    const response = await prompt(
+      "How much is a full color haircut with short hair?"
+    );
+    console.log(`>>ws/llm_openai_func_call.test::T4: `, response); //TRACE
+    expect(response).toBeTruthy();
+  });
+
+  it("T5: should be able to ask for schedules", async () => {
+    const response = await prompt(
+      "What time do you open on Tuesday?"
+    );
+    console.log(`>>ws/llm_openai_func_call.test::T5: `, response); //TRACE
+    expect(response).toBeTruthy();
+  });
 });
