@@ -42,4 +42,4 @@ Note: To use it with Retell AI custom LLM agent, you may need to set up a tunnel
 The knowledge base is saved in `example_backend/data.json`. To update it, run the following script:
 
 1. Go to scripts folder.
-2. `deno run pull`
+2. `deno run pull` (requires [deno installed](https://docs.deno.com/runtime/getting_started/installation/))
