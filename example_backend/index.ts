@@ -1,14 +1,10 @@
-const express = require("express");
-const axios = require("axios");
-const cors = require("cors");
-const serverless = require("serverless-http");
+import express from "express";
+import axios from "axios";
+import cors from "cors";
+import { RETELL_API_KEY, PORT } from "./config";
 
 const app = express();
-const port = 8080;
-
-const { RETELL_AI_API_KEY } = process.env || {};
-
-if (!RETELL_AI_API_KEY) throw "RETELL_AI_API_KEY is not set";
+const port = PORT;
 
 // Middleware to parse JSON bodies
 app.use(cors());
@@ -19,7 +15,7 @@ app.post("/create-web-call", async (req, res) => {
   const { agent_id, metadata, retell_llm_dynamic_variables } = req.body;
 
   // Prepare the payload for the API request
-  const payload = { agent_id };
+  const payload: any = { agent_id };
 
   // Conditionally add optional fields if they are provided
   if (metadata) {
@@ -36,7 +32,7 @@ app.post("/create-web-call", async (req, res) => {
       payload,
       {
         headers: {
-          Authorization: `Bearer ${RETELL_AI_API_KEY}`, // Replace with your actual Bearer token
+          Authorization: `Bearer ${RETELL_API_KEY}`, // Replace with your actual Bearer token
           "Content-Type": "application/json",
         },
       }
@@ -52,19 +48,10 @@ app.post("/create-web-call", async (req, res) => {
   }
 });
 
-const handler = serverless(app);
-
 const startServer = async () => {
   app.listen(port, () => {
-    console.log("listening on port 3000!");
+    console.log(`listening on port ${port}!`);
   });
 };
 
 startServer();
-
-module.exports.handler = async (event, context, callback) => {
-  console.log("Event:", JSON.stringify(event, null, 2));
-  const response = await handler(event, context, callback);
-  console.log("res: ", response);
-  return { ...response, headers: {} };
-};
