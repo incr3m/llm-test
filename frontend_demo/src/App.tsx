@@ -3,6 +3,8 @@ import "./App.css";
 import { RetellWebClient } from "retell-client-js-sdk";
 
 const agentId = import.meta.env.VITE_RETELL_AI_AGENT_ID;
+const endpointUrl =
+  import.meta.env.VITE_ENDPOINT_URL || "http://localhost:8080/create-web-call";
 interface RegisterCallResponse {
   access_token: string;
 }
@@ -80,14 +82,13 @@ const App = () => {
   async function registerCall(agentId: string): Promise<RegisterCallResponse> {
     try {
       // Update the URL to match the new backend endpoint you created
-      const response = await fetch("http://localhost:8080/create-web-call", {
+      const response = await fetch(endpointUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          agent_id: agentId, // Pass the agentId as agent_id
-          // You can optionally add metadata and retell_llm_dynamic_variables here if needed
+          agent_id: agentId,
           // metadata: { your_key: "your_value" },
           // retell_llm_dynamic_variables: { variable_key: "variable_value" }
         }),
@@ -108,8 +109,11 @@ const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <button onClick={toggleConversation}>
-          {isCalling ? "Stop" : "Start"}
+        <button
+          className={isCalling ? "btn-stop" : "btn"}
+          onClick={toggleConversation}
+        >
+          {isCalling ? "Stop call" : "Start call"}
         </button>
       </header>
     </div>

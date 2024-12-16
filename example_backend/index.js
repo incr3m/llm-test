@@ -1,6 +1,8 @@
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
+const serverless = require("serverless-http");
+
 const app = express();
 const port = 8080;
 
@@ -50,7 +52,19 @@ app.post("/create-web-call", async (req, res) => {
   }
 });
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+const handler = serverless(app);
+
+const startServer = async () => {
+  app.listen(port, () => {
+    console.log("listening on port 3000!");
+  });
+};
+
+startServer();
+
+module.exports.handler = async (event, context, callback) => {
+  console.log("Event:", JSON.stringify(event, null, 2));
+  const response = await handler(event, context, callback);
+  console.log("res: ", response);
+  return { ...response, headers: {} };
+};
