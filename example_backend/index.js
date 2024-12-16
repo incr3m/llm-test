@@ -6,6 +6,8 @@ const port = 8080;
 
 const { RETELL_AI_API_KEY } = process.env || {};
 
+if (!RETELL_AI_API_KEY) throw "RETELL_AI_API_KEY is not set";
+
 // Middleware to parse JSON bodies
 app.use(cors());
 

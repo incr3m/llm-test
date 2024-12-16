@@ -12,23 +12,33 @@ step-by-step guide on setting up Web Call.
 
 ## Run this Demo
 
-Step 1: Step up example backend
+Step 1: Retell account setup
+
+1. Create [Retell account](retellai.com).
+2. Create new agent in https://dashboard.retellai.com/agents.
+3. Generate api key in https://dashboard.retellai.com/apiKey.
+
+Step 2: Configure environment
+
+1. Create new `.env` file set the values for the ff:
+
+  - `RETELL_AI_API_KEY`=retell api key
+  - `VITE_RETELL_AI_AGENT_ID`=retell agent id
+
+
+Step 3: Step up example backend
 
 1. Go to example_backend folder
 
 2. `npm install`
 
-3. Create new `.env` file with `RETELL_AI_API_KEY` value inside 
-
 4. `npm run start` 
 
 
-Step 2: Step up frontend
+Step 4: Step up frontend
 
 1. go to frontend_demo folder
 
 2. `npm install`
-
-3. Create new `.env` file with `VITE_RETELL_AI_AGENT_ID` value inside 
 
 4. `npm run start`

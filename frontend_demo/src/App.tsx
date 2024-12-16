@@ -12,6 +12,8 @@ const retellWebClient = new RetellWebClient();
 const App = () => {
   const [isCalling, setIsCalling] = useState(false);
 
+  if (!agentId) alert("AGENT_ID is not set");
+
   // Initialize the SDK
   useEffect(() => {
     retellWebClient.on("call_started", () => {
