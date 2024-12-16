@@ -67,7 +67,7 @@ interface ToolCallResultResponse {
   content: string;
 }
 
-interface ResponseResponse {
+export interface ResponseResponse {
   response_type: "response";
   response_id: number;
   content: string;

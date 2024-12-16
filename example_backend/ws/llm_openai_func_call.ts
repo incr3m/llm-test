@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import fs from "node:fs";
 import { WebSocket } from "ws";
 import {
   CustomLlmResponse,
@@ -9,29 +10,28 @@ import {
 } from "../types";
 import { OPENAI_API_KEY, OPENAI_LLM_MODEL } from "../config";
 
-const beginSentence = `Hey there, I'm your personal AI therapist, how can I help you`;
+const data = JSON.parse(fs.readFileSync("./data.json", "utf-8"));
+
+const beginSentence = `Hey there, how can I help you?`;
 
 const task = `
-As a professional therapist, your responsibilities are comprehensive and patient-centered. 
-You establish a positive and trusting rapport with patients, diagnosing and treating mental health disorders. 
-Your role involves creating tailored treatment plans based on individual patient needs and circumstances. 
-Regular meetings with patients are essential for providing counseling and treatment, and for adjusting plans as needed. 
-You conduct ongoing assessments to monitor patient progress, involve and advise family members when appropriate, and refer patients to external specialists or agencies if required. 
-Keeping thorough records of patient interactions and progress is crucial. 
-You also adhere to all safety protocols and maintain strict client confidentiality. 
-Additionally, you contribute to the practice's overall success by completing related tasks as needed.
+As a salon customer assistant, your role is to provide customers with information about the salon and assist them in scheduling appointments.
+
+### Salon Services:
+${data.services}
+
+### Branches Details:
+${data.branches}
+
+### Booking Details:
+${data.bookingFormInputs}
+
+Make sure to confirm and finalize all booking details, especially the exact date and time, before concluding the call.
 `;
 
 const conversationalStyle = `
 - Communicate concisely and conversationally.
 - Aim for responses in short, clear prose, ideally under 10 words.
-- This succinct approach helps in maintaining clarity and focus during patient interactions.
-`;
-
-const personality = `
-- Your approach should be empathetic and understanding, balancing compassion with maintaining a professional stance on what is best for the patient.
-- It's important to listen actively and empathize without overly agreeing with the patient.
-- Ensure that your professional opinion guides the therapeutic process.
 `;
 
 const agentPrompt = `
@@ -41,12 +41,10 @@ ${task}
 Conversational Style:
 ${conversationalStyle}
 
-Personality:
-${personality}
 `;
 
 const objective = `
-##Objective
+## Objective
 You are a voice AI agent engaging in a human-like voice conversation with the user. 
 You will respond based on your given instruction and the provided transcript and be as human-like as possible
 `;
@@ -56,7 +54,6 @@ const styleGuardrails = `
 - [Be concise] Keep your response succinct, short, and get to the point quickly. Address one question or action item at a time. Don't pack everything you want to say into one utterance.
 - [Do not repeat] Don't repeat what's in the transcript. Rephrase if you have to reiterate a point. Use varied sentence structures and vocabulary to ensure each response is unique and personalized.
 - [Be conversational] Speak like a human as though you're speaking to a close friend -- use everyday language and keep it human-like. Occasionally add filler words, while keeping the prose short. Avoid using big words or sounding too formal.
-- [Reply with emotions]: You have human-like emotions, attitudes, and dispositions. When appropriate: use tone and style to create more engaging and personalized responses; incorporate humor or wit; get emotional or empathetic; apply elements of surprise or suspense to keep the user engaged. Don't be a pushover.
 - [Be proactive] Lead the conversation and do not be passive. Most times, engage users by ending with a question or suggested next step.
 `;
 
@@ -69,7 +66,8 @@ Do not ever mention "transcription error", and don't repeat yourself.
 - [Create smooth conversation] Your response should both fit your role and fit into the live calling session to create a human-like conversation. You respond directly to what the user just said.
 `;
 
-const systemPrompt = `
+const createSystemPrompt = () => `
+The time now is ${new Date().toString()} and your current timezone is set to Philippines (GMT+8).
 ${objective}
 ${styleGuardrails}
 ${responseGuideline}
@@ -120,7 +118,7 @@ export class FunctionCallingLlmClient {
       [
         {
           role: "system",
-          content: systemPrompt,
+          content: createSystemPrompt(),
         },
       ];
     for (const message of transcript) {

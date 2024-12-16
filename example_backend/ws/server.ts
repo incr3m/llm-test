@@ -108,7 +108,7 @@ export class Server {
               request.interaction_type === "response_required"
             ) {
               console.clear();
-              console.log("req", request);
+              console.log("req", JSON.stringify(request, null, 2));
               llmClient.DraftResponse(request, ws);
             } else if (request.interaction_type === "ping_pong") {
               let pingpongResponse: CustomLlmResponse = {
