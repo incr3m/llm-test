@@ -113,7 +113,7 @@ const App = () => {
           className={isCalling ? "btn-stop" : "btn"}
           onClick={toggleConversation}
         >
-          {isCalling ? "Stop call" : "Start call"}
+          {isCalling ? "Stop call" : "Start call with The Color Bar Salon agent"}
         </button>
       </header>
     </div>
