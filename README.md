@@ -15,7 +15,7 @@ step-by-step guide on setting up Web Call.
 Step 1: Retell account setup
 
 1. Create [Retell account](retellai.com).
-2. Create new agent in https://dashboard.retellai.com/agents.
+2. Create new agent (multi-prompt) in https://dashboard.retellai.com/agents.
 3. Generate api key in https://dashboard.retellai.com/apiKey.
 
 Step 2: Configure environment

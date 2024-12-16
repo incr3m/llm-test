@@ -1,0 +1,6 @@
+{
+  "tasks": {
+    "sync": "deno run --allow-net --allow-env --env-file=.env setup-knowledge-base.ts",
+    "sync:dev": "deno run --watch --allow-net --allow-env --env-file=.env setup-knowledge-base.ts"
+  }
+}
